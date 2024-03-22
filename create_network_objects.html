@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Checkpoint Network Objects</title>
+<style>
+    body {
+        background-color: #000;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    .content {
+        padding-top: 20px;
+    }
+    h1 {
+        margin-top: 20px;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .network-entry {
+        margin-bottom: 20px;
+    }
+    input {
+        margin: 5px;
+    }
+    #output {
+        margin-top: 20px;
+        color: yellow; /* Change output text color */
+    }
+footer {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        color: #ffffff; /* Text color */
+        font-size: 14px;
+}
+
+</style>
+<script>
+    function generateOutput() {
+        var output = document.getElementById("output");
+        var commands = [];
+
+        var networkEntries = document.getElementsByClassName("network-entry");
+        for (var i = 0; i < networkEntries.length; i++) {
+            var siteCode = networkEntries[i].querySelector(".site-code").value.toUpperCase();
+            var zone = networkEntries[i].querySelector(".zone").value.toUpperCase();
+            var vlanName = networkEntries[i].querySelector(".vlan-name").value.toUpperCase();
+            var subnet = networkEntries[i].querySelector(".subnet").value;
+            var subnetMask = networkEntries[i].querySelector(".subnet-mask").value;
+            var color = networkEntries[i].querySelector(".color").value.toLowerCase();
+
+            var command = 'add network name "' + siteCode + '_' + zone + '_' + vlanName + '_' + subnet + '_' + subnetMask + '" subnet "' + subnet + '" mask-length "' + subnetMask + '"';
+            commands.push(command + ' color ' + color);
+        }
+
+        output.innerHTML = commands.join("<br>") + "<br><br>"; // Add newline after each command
+    }
+
+    function copyOutput() {
+        var outputText = document.getElementById("output").innerText;
+        navigator.clipboard.writeText(outputText)
+            .then(() => {
+                alert("Output copied to clipboard!");
+            })
+            .catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+    }
+
+    function addNetworkEntry() {
+        var form = document.getElementById("network-form");
+        var newNetworkEntry = document.createElement("div");
+        newNetworkEntry.classList.add("network-entry");
+        newNetworkEntry.innerHTML = `
+            <label for="siteCode">Site code:</label>
+            <input type="text" class="site-code" name="siteCode">
+            <label for="zone">Zone:</label>
+            <input type="text" class="zone" name="zone">
+            <label for="vlanName">VLAN Name:</label>
+            <input type="text" class="vlan-name" name="vlanName">
+            <label for="subnet">Subnet:</label>
+            <input type="text" class="subnet" name="subnet">
+            <label for="subnetMask">Subnet Mask:</label>
+            <input type="text" class="subnet-mask" name="subnetMask">
+            <label for="color">Color:</label>
+            <select class="color" name="color">
+                <option value="aquamarine">Aquamarine</option>
+                <option value="black" selected>Black</option>
+                <option value="blue">Blue</option>
+               <option value="cadetblue">Cadet Blue</option>
+                <option value="burlywood">Burlywood</option>
+                <option value="cyan">Cyan</option>
+                <option value="darkgreen">Dark Green</option>
+                <option value="khaki">Khaki</option>
+                <option value="orchid">Orchid</option>
+                <option value="darkorange">Dark Orange</option>
+                <option value="darkseagreen">Dark Sea Green</option>
+                <option value="pink">Pink</option>
+                <option value="turquoise">Turquoise</option>
+                <option value="darkblue">Dark Blue</option>
+                <option value="firebrick">Firebrick</option>
+                <option value="brown">Brown</option>
+                <option value="forestgreen">Forest Green</option>
+                <option value="gold">Gold</option>
+                <option value="darkgoldenrod">Dark Goldenrod</option>
+                <option value="gray">Gray</option>
+                <option value="darkgray">Dark Gray</option>
+                <option value="lightgreen">Light Green</option>
+                <option value="lemonchiffon">Lemon Chiffon</option>
+                <option value="coral">Coral</option>
+                <option value="seagreen">Sea Green</option>
+                <option value="skyblue">Sky Blue</option>
+                <option value="magenta">Magenta</option>
+                <option value="purple">Purple</option>
+                <option value="slateblue">Slate Blue</option>
+                <option value="violetred">Violet Red</option>
+                <option value="navyblue">Navy Blue</option>
+                <option value="olive">Olive</option>
+                <option value="orange">Orange</option>
+                <option value="red">Red</option>
+                <option value="sienna">Sienna</option>
+                <option value="yellow">Yellow</option>
+            </select>
+        `;
+        form.appendChild(newNetworkEntry);
+    }
+</script>
+</head>
+<body>
+
+<div class="content">
+    <h1>Create Checkpoint Network Objects</h1>
+    <form id="network-form">
+        <div class="network-entry">
+            <label for="siteCode">Site code:</label>
+            <input type="text" class="site-code" name="siteCode">
+            <label for="zone">Zone:</label>
+            <input type="text" class="zone" name="zone">
+            <label for="vlanName">VLAN Name:</label>
+            <input type="text" class="vlan-name" name="vlanName">
+            <label for="subnet">Subnet:</label>
+            <input type="text" class="subnet" name="subnet">
+            <label for="subnetMask">Subnet Mask:</label>
+            <input type="text" class="subnet-mask" name="subnetMask">
+            <label for="color">Color:</label>
+            <select class="color" name="color">
+                <option value="aquamarine">Aquamarine</option>
+                <option value="black" selected>Black</option>
+                <option value="blue">Blue</option>
+                <option value="cadetblue">Cadet Blue</option>
+                <option value="burlywood">Burlywood</option>
+                <option value="cyan">Cyan</option>
+                <option value="darkgreen">Dark Green</option>
+                <option value="khaki">Khaki</option>
+                <option value="orchid">Orchid</option>
+                <option value="darkorange">Dark Orange</option>
+                <option value="darkseagreen">Dark Sea Green</option>
+                <option value="pink">Pink</option>
+                <option value="turquoise">Turquoise</option>
+                <option value="darkblue">Dark Blue</option>
+                <option value="firebrick">Firebrick</option>
+                <option value="brown">Brown</option>
+                <option value="forestgreen">Forest Green</option>
+                <option value="gold">Gold</option>
+                <option value="darkgoldenrod">Dark Goldenrod</option>
+                <option value="gray">Gray</option>
+                <option value="darkgray">Dark Gray</option>
+                <option value="lightgreen">Light Green</option>
+                <option value="lemonchiffon">Lemon Chiffon</option>
+                <option value="coral">Coral</option>
+                <option value="seagreen">Sea Green</option>
+                <option value="skyblue">Sky Blue</option>
+                <option value="magenta">Magenta</option>
+                <option value="purple">Purple</option>
+                <option value="slateblue">Slate Blue</option>
+                <option value="violetred">Violet Red</option>
+                <option value="navyblue">Navy Blue</option>
+                <option value="olive">Olive</option>
+                <option value="orange">Orange</option>
+                <option value="red">Red</option>
+                <option value="sienna">Sienna</option>
+                <option value="yellow">Yellow</option>
+            </select>
+        </div>
+        <!-- Add more network entries dynamically -->
+    </form>
+    <button onclick="addNetworkEntry()">Add Network Entry</button>
+    <br>
+    <input type="button" value="Generate Command" onclick="generateOutput()">
+    <div id="output"></div>
+    <br>
+    <button onclick="copyOutput()">Copy Output</button>
+</div>
+<footer>Created by Jitendra Vasani (T7VV)</footer>
+
+</body>
+</html>
